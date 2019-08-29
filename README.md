@@ -49,4 +49,6 @@ Step to Create Local Repository:
   sudo yum install -y <package_name>
   
  7. Refer https://github.com/abhisheknanarkar24/Ansible-installation.git repository.
+ 
+ 8. Added scripts to create local repository using ansible script.
 
