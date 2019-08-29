@@ -1,0 +1,48 @@
+---
+
+- hosts: "{{ hosts }}"
+  become: true
+  vars:
+    ldap_repo: "ldaprepo.zip"
+    repo_dir: "/apps/ldap"
+    repo_name: "ldap"
+    description: "ldap repository"
+
+  tasks:
+  - name: Create directory if doesn't exist
+    file:
+      path: "{{ repo_dir }}"
+      state: directory
+      mode: 0755
+      owner: "{{ ansible_ssh_user }}"
+      group: "{{ ansible_ssh_user }}"
+
+  - name: Copy RPM packages
+    unarchive:
+      src: "{{ ldap_repo }}"
+      dest: "{{ repo_dir }}"
+
+  - name: Define a repository
+    shell: 'createrepo "{{ repo_dir }}"'
+
+  - name: Create a repository
+    yum_repository:
+      name: "{{ repo_name }}"
+      description: "{{ description }}"
+      baseurl: file://{{ repo_dir }}
+      gpgcheck: no
+      enabled: 1
+      state: present
+      
+  - name: Install the Directory Server packages
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - 389-ds-base
+      - 389-adminutil
+      - idm-console-framework
+      - 389-admin
+      - 389-ds-console
+      - 389-console
+      - 389-admin-console
