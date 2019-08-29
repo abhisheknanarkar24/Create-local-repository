@@ -1,8 +1,5 @@
 # Create-local-repository
-This repository contains instruction and example to create local repository on Linux
-
-Why Local Repository?
-
+This repository contains instruction and example to create local repository on Linux (RHEL/centOS/Oracle Linux)
 - To avoid dependencies issue with package.
 - Installing each dependency seaparately takes more time.
 
@@ -50,4 +47,6 @@ Step to Create Local Repository:
 
 
   sudo yum install -y <package_name>
+  
+ 7. Refer https://github.com/abhisheknanarkar24/Ansible-installation.git repository.
 
